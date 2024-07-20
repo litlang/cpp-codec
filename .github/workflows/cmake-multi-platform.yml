@@ -31,7 +31,7 @@ jobs:
 
     - name: build
       run: >
-        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=dist .;
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=dist -G "Unix Makefiles" .;
         make install;
 
     - name: Upload Artifacts
