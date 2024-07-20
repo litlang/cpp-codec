@@ -1,0 +1,75 @@
+name: CMake on multiple platforms
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  linux-x86-64:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: build
+      run: >
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=dist ..;
+        make install;
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: codec-linux-x86-64-release
+        path: dist/*
+
+  windows-x86-64:
+    runs-on: windows-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: build
+      run: >
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=dist ..;
+        make install;
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: codec-windows-x86-64-release
+        path: dist/*
+
+  macos-x86-64:
+    runs-on: macos-13
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: build
+      run: >
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=dist ..;
+        make install;
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: codec-macos-x86-64-release
+        path: dist/*
+
+  macos-arm-64:
+    runs-on: macos-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: build
+      run: >
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=dist ..;
+        make install;
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: codec-macos-arm-64-release
+        path: dist/*
