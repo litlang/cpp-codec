@@ -73,3 +73,27 @@ jobs:
       with:
         name: codec-macos-arm-64-release
         path: dist/*
+        
+  android-arm-64:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+      
+    - name: setup android sdk
+      uses: nttld/setup-ndk@v1
+      id: setup-ndk
+      with:
+        ndk-version: r26d
+        add-to-path: false
+
+    - name: build
+      run: >
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=dist -DCMAKE_TOOLCHAIN_FILE=cmake/android-arm-64.cmake -DANDROID_NDK_HOME=${{steps.setup-ndk.outputs.ndk-path}} .;
+        make install;
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: codec-android-arm-64-release
+        path: dist/*
